@@ -1,0 +1,25 @@
+ackermann_chassis:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+  # Position Controllers ---------------------------------------
+  turn_fl_joint_controller:
+    type: effort_controllers/JointPositionController
+    joint: turn_fl_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  turn_fr_joint_controller:
+    type: effort_controllers/JointPositionController
+    joint: turn_fr_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  wheel_rl_joint_transmission:
+    type: effort_controllers/JointPositionController
+    joint: wheel_rl_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  wheel_rr_joint_transmission:
+    type: effort_controllers/JointPositionController
+    joint: wheel_rr_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}

@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<robot name="ackermann_chassis">     
+    <link name="base_link"/>
+    <link name="chassis_link">
+        <visual>
+                <geometry>
+                    <box size="1.5 0.6 0.2"/>
+                </geometry>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <material name="white">
+                    <color rgba="1 1 1 1"/>
+                </material>
+        </visual>
+    </link>
+
+    <link name="wheel_rl_link">
+        <visual>
+                <geometry>
+                    <cylinder radius="0.2" length="0.1"/>
+                </geometry>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <material name="yellow">
+                    <color rgba="0 0.5 0.5 1"/>
+                </material>
+        </visual>
+    </link>
+
+    <link name="wheel_rr_link">
+        <visual>
+                <geometry>
+                    <cylinder radius="0.2" length="0.1"/>
+                </geometry>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <material name="yellow">
+                    <color rgba="0 0.5 0.5 1"/>
+                </material>
+        </visual>
+    </link>
+
+    <link name="turn_fl_link"/>
+    <link name="wheel_fl_link">
+        <visual>
+                <geometry>
+                    <cylinder radius="0.2" length="0.1"/>
+                </geometry>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <material name="yellow">
+                <color rgba="0 0.5 0.5 1"/>
+                </material>
+        </visual>
+    </link>
+
+    <link name="turn_fr_link"/>
+    <link name="wheel_fr_link">
+        <visual>
+                <geometry>
+                    <cylinder radius="0.2" length="0.1"/>
+                </geometry>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <material name="yellow">
+                <color rgba="0 0.5 0.5 1"/>
+                </material>
+        </visual>
+    </link>
+
+    <joint name="base_to_chassis" type="fixed">
+            <parent link="base_link"/>
+            <child link="chassis_link"/>
+            <origin xyz="0 0 0.2" rpy="0 0 0"/>
+     </joint>
+
+    <joint name="wheel_rl_joint" type="continuous">
+            <parent link="base_link"/>
+            <child link="wheel_rl_link"/>
+            <origin rpy="1.57079632679 0 0" xyz="-0.6 0.5 0.2"/>
+            <axis xyz="0 0 1"/>
+    </joint>
+
+    <joint name="wheel_rr_joint" type="continuous">
+            <parent link="base_link"/>
+            <child link="wheel_rr_link"/>
+            <origin rpy="1.57079632679 0 0" xyz="-0.6 -0.5 0.2"/>
+            <axis xyz="0 0 1"/>
+    </joint>
+
+    <joint name="turn_fl_joint" type="revolute">
+            <parent link="base_link"/>
+            <child link="turn_fl_link"/>
+            <origin rpy="0 0 0" xyz="0.6 0.5 0.2"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="100" lower="-0.785398163" upper="0.785398163" velocity="1"/> 
+    </joint>
+
+    <joint name="wheel_fl_joint" type="continuous">
+            <parent link="turn_fl_link"/>
+            <child link="wheel_fl_link"/>
+            <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
+            <axis xyz="0 0 1"/>
+    </joint>
+
+    <joint name="turn_fr_joint" type="revolute">
+            <parent link="base_link"/>
+            <child link="turn_fr_link"/>
+            <origin rpy="0 0 0" xyz="0.6 -0.5 0.2"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="100" lower="-0.785398163" upper="0.785398163" velocity="1"/> 
+    </joint>
+
+    <joint name="wheel_fr_joint" type="continuous">
+            <parent link="turn_fr_link"/>
+            <child link="wheel_fr_link"/>
+            <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
+            <axis xyz="0 0 1"/>
+    </joint>
+</robot>
