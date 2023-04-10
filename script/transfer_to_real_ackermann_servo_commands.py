@@ -31,35 +31,20 @@ def set_throttle_steer(data):
     throttle = data.drive.speed
     steer = data.drive.steering_angle # angular velocity in fact
 
+    throttle_left = (throttle - steer * d) * 31.75
+    throttle_right = (throttle + steer * d) * 31.75
     
+    R = throttle/steer
 
-    
+    steer_left  = math.atan2(l, R - d)
+    steer_right = math.atan2(l, R + d)
 
-    if ( abs(throttle) > abs(steer * d)):
-        throttle_left = (throttle - steer * d) * 31.75
-        throttle_right = (throttle + steer * d) * 31.75
-        R = throttle/steer
-        if (R < 0):
-            steer_left = math.atan2(l, R + d) - math.pi
-            steer_right = math.atan2(l, R - d) - math.pi
-        else:
-            steer_left  = math.atan2(l, R - d)
-            steer_right = math.atan2(l, R + d)
-        pub_vel_left_rear_wheel.publish(throttle_left)
-        pub_vel_right_rear_wheel.publish(throttle_right)
-        pub_pos_left_steering_hinge.publish(steer_left)
-        pub_pos_right_steering_hinge.publish(steer_right)
-    else:
-        pub_vel_left_rear_wheel.publish(throttle)
-        pub_vel_right_rear_wheel.publish(throttle)
-        pub_pos_left_steering_hinge.publish(steer)
-        pub_pos_right_steering_hinge.publish(steer)
-
-
-    # for 4-drive model: uncomment the following two lines 
+    pub_vel_left_rear_wheel.publish(throttle_left)
+    pub_vel_right_rear_wheel.publish(throttle_right)
     # pub_vel_left_front_wheel.publish(throttle_left)
     # pub_vel_right_front_wheel.publish(throttle_right)
-    
+    pub_pos_left_steering_hinge.publish(steer_left)
+    pub_pos_right_steering_hinge.publish(steer_right)
 
     rospy.loginfo("throttle_left: %f", throttle_left)
     rospy.loginfo("throttle_right: %f", throttle_right)
