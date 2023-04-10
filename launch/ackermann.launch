@@ -16,7 +16,7 @@
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf"
         args="-urdf -model ackermann_chassis -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
 
-  <!-- <include file="$(find ackermann_simu)/launch/ackermann_control.launch" /> -->
+  <include file="$(find ackermann_simu)/launch/ackermann_control.launch" />
 
   <!-- <rosparam command="load" file="$(find ackermann_simu)/param/ackermann_teleop_param.yaml" /> -->
   <!-- <node pkg="ackermann_simu" type="ackermann_teleop.py" name="ackermann_teleop" /> -->
