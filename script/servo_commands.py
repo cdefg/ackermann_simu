@@ -33,15 +33,18 @@ def set_throttle_steer(data):
 
     throttle_left = (throttle - steer * d) * 31.75
     throttle_right = (throttle + steer * d) * 31.75
+    
+    R = throttle/steer
 
-    steer = math.atan2(steer*l, throttle)
+    steer_left  = math.atan2(l, R - d)
+    steer_right = math.atah2(l, R + d)
 
     pub_vel_left_rear_wheel.publish(throttle_left)
     pub_vel_right_rear_wheel.publish(throttle_right)
     pub_vel_left_front_wheel.publish(throttle_left)
     pub_vel_right_front_wheel.publish(throttle_right)
-    pub_pos_left_steering_hinge.publish(steer)
-    pub_pos_right_steering_hinge.publish(steer)
+    pub_pos_left_steering_hinge.publish(steer_left)
+    pub_pos_right_steering_hinge.publish(steer_right)
 
     rospy.loginfo("throttle_left: %f", throttle_left)
     rospy.loginfo("throttle_right: %f", throttle_right)
