@@ -11,6 +11,7 @@ flag_move = 0
 
 d = 0.175
 l = 0.26*2
+steer_threshold = 0.001
 
 def set_throttle_steer(data):
 
@@ -34,8 +35,15 @@ def set_throttle_steer(data):
     
 
     
+    if abs(steer) < steer_threshold:
+        pub_vel_left_rear_wheel.publish(throttle * 31.75)
+        pub_vel_right_rear_wheel.publish(throttle * 31.75)
+        pub_pos_left_steering_hinge.publish(steer)
+        pub_pos_right_steering_hinge.publish(steer)
 
-    if ( abs(throttle) > abs(steer * d)):
+        rospy.loginfo("throttle(target velocity): %f", throttle* 31.75)
+        rospy.loginfo("steer(target angular velocity): %f", steer)
+    elif ( abs(throttle) > abs(steer * d)):
         throttle_left = (throttle - steer * d) * 31.75
         throttle_right = (throttle + steer * d) * 31.75
         R = throttle/steer
@@ -49,25 +57,21 @@ def set_throttle_steer(data):
         pub_vel_right_rear_wheel.publish(throttle_right)
         pub_pos_left_steering_hinge.publish(steer_left)
         pub_pos_right_steering_hinge.publish(steer_right)
+
+        rospy.loginfo("throttle_left: %f", throttle_left)
+        rospy.loginfo("throttle_right: %f", throttle_right)
+        rospy.loginfo("steer_left: %f", steer_left)
+        rospy.loginfo("steer_right: %f", steer_right)
     else:
-        pub_vel_left_rear_wheel.publish(throttle)
-        pub_vel_right_rear_wheel.publish(throttle)
+        pub_vel_left_rear_wheel.publish(throttle * 31.75)
+        pub_vel_right_rear_wheel.publish(throttle * 31.75)
         pub_pos_left_steering_hinge.publish(steer)
         pub_pos_right_steering_hinge.publish(steer)
 
+        rospy.loginfo("throttle(target velocity): %f", throttle* 31.75)
+        rospy.loginfo("steer(target angular velocity): %f", steer)
 
-    # for 4-drive model: uncomment the following two lines 
-    # pub_vel_left_front_wheel.publish(throttle_left)
-    # pub_vel_right_front_wheel.publish(throttle_right)
     
-
-    rospy.loginfo("throttle_left: %f", throttle_left)
-    rospy.loginfo("throttle_right: %f", throttle_right)
-    rospy.loginfo("steer_left: %f", steer_left)
-    rospy.loginfo("steer_right: %f", steer_right)
-
-    rospy.loginfo("throttle(target velocity): %f", throttle)
-    rospy.loginfo("steer(target angular velocity): %f", steer)
 
 def servo_commands():
 
