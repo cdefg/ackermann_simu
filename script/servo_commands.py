@@ -19,21 +19,12 @@ def set_throttle_steer(data):
 
     pub_vel_left_rear_wheel = rospy.Publisher('/ackermann_chassis/left_rear_wheel_velocity_controller/command', Float64, queue_size=1)
     pub_vel_right_rear_wheel = rospy.Publisher('/ackermann_chassis/right_rear_wheel_velocity_controller/command', Float64, queue_size=1)
-    # pub_vel_left_front_wheel = rospy.Publisher('/ackermann_chassis/left_front_wheel_velocity_controller/command', Float64, queue_size=1)
-    # pub_vel_right_front_wheel = rospy.Publisher('/ackermann_chassis/right_front_wheel_velocity_controller/command', Float64, queue_size=1)
 
     pub_pos_left_steering_hinge = rospy.Publisher('/ackermann_chassis/left_steering_hinge_position_controller/command', Float64, queue_size=1)
     pub_pos_right_steering_hinge = rospy.Publisher('/ackermann_chassis/right_steering_hinge_position_controller/command', Float64, queue_size=1)
 
-    # throttle = data.drive.speed*31.25
-    # steer = data.drive.steering_angle
-
-
     throttle = data.drive.speed
     steer = data.drive.steering_angle # angular velocity in fact
-
-    
-
     
     if abs(steer) < steer_threshold:
         pub_vel_left_rear_wheel.publish(throttle * 31.75)

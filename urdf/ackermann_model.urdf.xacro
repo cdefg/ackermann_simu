@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot
-  name="xju" xmlns:xacro="http://ros.org/wiki/xacro">
+  name="ackermann_chassis" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find ackermann_simu)/urdf/ackermann_control.xacro"/>
   <xacro:include filename="$(find ackermann_simu)/urdf/ackermann_model_gazebo.xacro"/>
   <xacro:include filename="$(find ackermann_simu)/urdf/common_properties.xacro"/>
@@ -124,7 +124,6 @@
     <limit effort="10" velocity="1000" />
   </joint>
   <xacro:wheel_transmission name="left_front_wheel" />
-
 
   <link name="right_steering_hinge">
     <inertial>
